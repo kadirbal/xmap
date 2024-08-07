@@ -1,11 +1,44 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-import { Button } from "@chakra-ui/react";
+"use client";
+import PositionTable from "@/components/PositionsTable";
+import { useStore } from "@/store";
 
-export default function Home() {
+import {
+  Button,
+  Container,
+  Flex,
+  Link,
+  Stack,
+  Table,
+  TableContainer,
+  Text,
+  Thead,
+  Tr,
+} from "@chakra-ui/react";
+import NextLink from "next/link";
+
+const Page = () => {
+  const store = useStore();
+
   return (
-    <main>
-      <Button>Hello</Button>
-    </main>
+    <Container py={8}>
+      <Stack spacing={8}>
+        <Text fontSize={"4xl"} fontWeight={600}>
+          XMap Konum Listesi
+        </Text>
+
+        <Flex flexGrow={1}>
+          <Link as={NextLink} href="/save">
+            <Button variant={"link"}>Yeni Konum Oluştur</Button>
+          </Link>
+          <Link as={NextLink} href="/route-creation">
+            <Button variant={"link"}>Rota oluştur</Button>
+          </Link>
+        </Flex>
+
+        <PositionTable positions={store.positions}></PositionTable>
+      </Stack>
+    </Container>
   );
-}
+};
+
+export default Page;
