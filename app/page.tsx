@@ -1,4 +1,5 @@
 "use client";
+
 import PositionTable from "@/components/PositionsTable";
 import { useStore } from "@/store";
 
