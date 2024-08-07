@@ -6,25 +6,8 @@ import { TPosition } from "@/models/TPosition";
 type TStore = {
   positions: Array<TPosition & { id: string }>;
   addPosition: (position: TPosition & { id: string }) => void;
+  updatePosition: (position: TPosition & { id: string }) => void;
 };
-
-type TPositionStore = {
-  name: string;
-  color: string;
-  position?: LatLngLiteral;
-  setName: (name: string) => void;
-  setColor: (color: string) => void;
-  setPosition: (position: LatLngLiteral) => void;
-};
-
-export const usePositionStore = create<TPositionStore>()((set) => ({
-  name: "",
-  color: "#000000",
-  position: undefined,
-  setName: (name: string) => set((state) => ({ name })),
-  setColor: (color: string) => set((state) => ({ color })),
-  setPosition: (position: LatLngLiteral) => set((state) => ({ position })),
-}));
 
 export const useStore = create<TStore>()(
   persist(
@@ -32,6 +15,13 @@ export const useStore = create<TStore>()(
       positions: [],
       addPosition: (position) =>
         set((state) => ({ positions: [...state.positions, position] })),
+      updatePosition: (position) =>
+        set((state) => {
+          const np = [...state.positions]; // as new positions
+          const index = np.findIndex((item) => item.id === position.id);
+          np[index] = position;
+          return { positions: np };
+        }),
     }),
     {
       name: "positions-store",
