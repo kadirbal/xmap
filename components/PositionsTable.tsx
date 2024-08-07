@@ -35,54 +35,54 @@ const PositionTable = ({
     throw new Error("Function not implemented.");
   }
 
-  return (
-    positions.length && (
-      <Card>
-        <TableContainer>
-          <Table variant={"simple"}>
-            <Thead>
-              <Tr>
-                <Th>Konum Adı</Th>
-                <Th>Konumu Düzenle</Th>
+  return positions.length ? (
+    <Card>
+      <TableContainer>
+        <Table variant={"simple"}>
+          <Thead>
+            <Tr>
+              <Th>Konum Adı</Th>
+              <Th>Konumu Düzenle</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {positions.map((position) => (
+              <Tr key={position.id}>
+                <Td>
+                  <Flex align={"center"}>
+                    <Popover flip={true} placement="right-end">
+                      <PopoverTrigger>
+                        <Button variant={"ghost"}>
+                          <Icon color={position.color} as={MdLocationPin} />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <PopoverCloseButton></PopoverCloseButton>
+                        <PopoverHeader>Konum bilgileri</PopoverHeader>
+                        <PopoverBody>
+                          <Text> Enlem: {position.position.lat}</Text>
+                          <Text> Boylam: {position.position.lng}</Text>
+                        </PopoverBody>
+                      </PopoverContent>
+                    </Popover>
+                    <Text>{position.name}</Text>
+                  </Flex>
+                </Td>
+                <Td>
+                  <Link as={NextLink} href={`/save/${position.id}`}>
+                    <Button>
+                      <Icon as={MdArrowRight}></Icon>
+                    </Button>
+                  </Link>
+                </Td>
               </Tr>
-            </Thead>
-            <Tbody>
-              {positions.map((position) => (
-                <Tr key={position.id}>
-                  <Td>
-                    <Flex align={"center"}>
-                      <Popover flip={true} placement="right-end">
-                        <PopoverTrigger>
-                          <Button variant={"ghost"}>
-                            <Icon color={position.color} as={MdLocationPin} />
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent>
-                          <PopoverCloseButton></PopoverCloseButton>
-                          <PopoverHeader>Konum bilgileri</PopoverHeader>
-                          <PopoverBody>
-                            <Text> Enlem: {position.position.lat}</Text>
-                            <Text> Boylam: {position.position.lng}</Text>
-                          </PopoverBody>
-                        </PopoverContent>
-                      </Popover>
-                      <Text>{position.name}</Text>
-                    </Flex>
-                  </Td>
-                  <Td>
-                    <Link as={NextLink} href={`/save/${position.id}`}>
-                      <Button>
-                        <Icon as={MdArrowRight}></Icon>
-                      </Button>
-                    </Link>
-                  </Td>
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
-      </Card>
-    )
+            ))}
+          </Tbody>
+        </Table>
+      </TableContainer>
+    </Card>
+  ) : (
+    <Text> </Text>
   );
 };
 
