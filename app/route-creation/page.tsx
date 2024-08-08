@@ -14,6 +14,10 @@ import {
   InfoWindow,
 } from "@vis.gl/react-google-maps";
 import { useEffect, useState } from "react";
+type TPosition = {
+  lat: number;
+  lng: number;
+};
 
 const mapId = process.env.NEXT_PUBLIC_MAP_ID;
 
@@ -21,7 +25,7 @@ const FooMap = () => {
   const map = useMap();
   const maps = useMapsLibrary("maps");
   const { positions } = useStore();
-  const [userPosition, setUserPosition] = useState(null);
+  const [userPosition, setUserPosition] = useState<TPosition | null>(null);
   const toast = useToast();
 
   // Kullanıcının konumunu alıyoruz
@@ -44,14 +48,15 @@ const FooMap = () => {
         }
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Konumları kullanıcıya göre sıralama ve rota oluşturma
   useEffect(() => {
     if (map && maps && userPosition) {
       // Mesafeyi hesaplamak için haversine formülü kullanıyoruz
-      const haversineDistance = (coords1, coords2) => {
-        const toRad = (x) => (x * Math.PI) / 180;
+      const haversineDistance = (coords1: TPosition, coords2: TPosition) => {
+        const toRad = (x: number) => (x * Math.PI) / 180;
 
         const lat1 = coords1.lat;
         const lon1 = coords1.lng;
@@ -117,7 +122,7 @@ const FooMap = () => {
   );
 };
 
-const MarkerWText = ({ position }) => {
+const MarkerWText = ({ position }: { position: any }) => {
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -150,9 +155,11 @@ const Page = () => {
 
   return (
     <>
-      <APIProvider apiKey={apiKey}>
-        <FooMap />
-      </APIProvider>
+      {apiKey && (
+        <APIProvider apiKey={apiKey}>
+          <FooMap />
+        </APIProvider>
+      )}
     </>
   );
 };
