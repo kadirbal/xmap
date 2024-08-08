@@ -4,6 +4,7 @@ import PositionTable from "@/components/PositionsTable";
 import { useStore } from "@/store";
 
 import {
+  Box,
   Button,
   Container,
   Flex,
@@ -27,13 +28,17 @@ const Page = () => {
           XMap Konum Listesi
         </Text>
 
-        <Flex flexGrow={1}>
-          <Link as={NextLink} href="/save">
-            <Button variant={"link"}>Yeni Konum Oluştur</Button>
-          </Link>
-          <Link as={NextLink} href="/route-creation">
-            <Button variant={"link"}>Rota oluştur</Button>
-          </Link>
+        <Flex>
+          <Flex flexGrow={1}>
+            <Link as={NextLink} href="/save">
+              <Button variant={"link"}>Yeni Konum Oluştur</Button>
+            </Link>
+          </Flex>
+          <Flex flexGrow={1}>
+            <Link as={NextLink} href="/route-creation">
+              <Button variant={"link"}>Rota oluştur</Button>
+            </Link>
+          </Flex>
         </Flex>
 
         <PositionTable positions={store.positions}></PositionTable>
