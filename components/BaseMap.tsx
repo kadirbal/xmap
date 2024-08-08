@@ -8,11 +8,11 @@ const BaseMap = ({
   onClick,
 }: {
   children: React.ReactNode;
-  onClick: (bar: google.maps.LatLngLiteral | null) => void;
+  onClick?: (bar: google.maps.LatLngLiteral | null) => void;
 }) => {
   function handleClick(event: MapMouseEvent): void {
     const pos = event.detail.latLng;
-    onClick(pos);
+    onClick && onClick(pos);
   }
 
   return (

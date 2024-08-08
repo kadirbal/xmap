@@ -31,10 +31,6 @@ const PositionTable = ({
 }: {
   positions: Array<TPosition & { id: string }>;
 }) => {
-  function handleClick(id: string): void {
-    throw new Error("Function not implemented.");
-  }
-
   return positions.length ? (
     <Card>
       <TableContainer>

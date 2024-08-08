@@ -24,7 +24,7 @@ const Foo = () => {
 
   const toast = useToast();
 
-  const [id, setID] = useState(nanoid(4));
+  const [id, setID] = useState();
   const [name, setName] = useState("");
   const [color, setColor] = useState("#000000");
   const [position, setPosition] = useState();
@@ -41,7 +41,7 @@ const Foo = () => {
   }, [_positions]);
 
   function handleSave(): void {
-    const bar = { id, name, color, position };
+    const bar = { id: nanoid(4), name, color, position };
 
     const toastCfg = {
       title: "İşlem Başarılı",
