@@ -29,7 +29,7 @@ RUN corepack prepare pnpm@latest --activate
 
 WORKDIR /app
 
-COPY .env.$SETUP_ENVINROMENT.sample .env
+COPY .env .env
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
