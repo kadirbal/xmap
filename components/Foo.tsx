@@ -42,7 +42,12 @@ const Foo = () => {
   }, [_positions]);
 
   function handleSave(): void {
-    const bar = { id: nanoid(4), name, color, position } as TPosition & {
+    const bar = {
+      id: _id ? _id : nanoid(4),
+      name,
+      color,
+      position,
+    } as TPosition & {
       id: string;
     };
 
