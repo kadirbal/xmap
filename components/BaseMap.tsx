@@ -1,4 +1,5 @@
 import { APIProvider, Map, MapMouseEvent } from "@vis.gl/react-google-maps";
+import { LatLngLiteral } from "leaflet";
 
 const apiKey = process.env.NEXT_PUBLIC_MAPS_API_KEY;
 const mapId = process.env.NEXT_PUBLIC_MAP_ID;
@@ -8,11 +9,11 @@ const BaseMap = ({
   onClick,
 }: {
   children: React.ReactNode;
-  onClick?: (bar: google.maps.LatLngLiteral | null) => void;
+  onClick?: (bar: LatLngLiteral) => void;
 }) => {
   function handleClick(event: MapMouseEvent): void {
     const pos = event.detail.latLng;
-    onClick && onClick(pos);
+    onClick && pos && onClick(pos);
   }
 
   return (

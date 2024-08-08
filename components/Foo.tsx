@@ -13,10 +13,11 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import LocationForm from "./LocationForm";
-import GoogleMap from "./GoogleMap";
 import NextLink from "next/link";
 import BaseMap from "./BaseMap";
 import { AdvancedMarker, Pin } from "@vis.gl/react-google-maps";
+import { LatLngLiteral } from "leaflet";
+import { TPosition } from "@/models/TPosition";
 
 const Foo = () => {
   const { positions: _positions, addPosition, updatePosition } = useStore();
@@ -24,10 +25,10 @@ const Foo = () => {
 
   const toast = useToast();
 
-  const [id, setID] = useState();
+  const [id, setID] = useState<string>();
   const [name, setName] = useState("");
   const [color, setColor] = useState("#000000");
-  const [position, setPosition] = useState();
+  const [position, setPosition] = useState<LatLngLiteral>();
 
   useEffect(() => {
     const _position = _positions.find((position) => position.id === _id);
@@ -41,18 +42,20 @@ const Foo = () => {
   }, [_positions]);
 
   function handleSave(): void {
-    const bar = { id: nanoid(4), name, color, position };
+    const bar = { id: nanoid(4), name, color, position } as TPosition & {
+      id: string;
+    };
 
     const toastCfg = {
       title: "İşlem Başarılı",
       duration: 5000,
       isClosable: true,
-      status: "success",
+      // status: "error",
     };
 
     if (color && name && position) {
       _id ? updatePosition(bar) : addPosition(bar);
-      toast(toastCfg);
+      toast({ ...toastCfg, status: "success" });
     } else {
       toast({ ...toastCfg, title: "Hata", status: "error" });
       return;
